@@ -1,0 +1,25 @@
+{
+  "name": "react-three-fiber-perf",
+  "version": "0.0.0",
+  "scripts": {
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
+  },
+  "dependencies": {
+    "@react-three/fiber": "^7.0.17",
+    "leva": "^0.9.14",
+    "react": "^18.0.0-alpha-3c4c1c470-20211021",
+    "react-dom": "^18.0.0-alpha-3c4c1c470-20211021",
+    "three": "^0.133.1",
+    "zustand": "^3.6.0"
+  },
+  "devDependencies": {
+    "@types/react": "^17.0.0",
+    "@types/react-dom": "^17.0.0",
+    "@types/three": "^0.133.1",
+    "@vitejs/plugin-react": "^1.0.0",
+    "typescript": "^4.3.2",
+    "vite": "^2.6.4"
+  }
+}
