@@ -46,7 +46,7 @@ const useStore = create(
 )
 
 function ItemSlow({ id }: { id: number }) {
-	const coords = useStore((state) => state.coords[id])
+	const coords = useStore((state) => state).coords[id]
 	if (!coords) return null
 	return (
 		<mesh rotation={coords}>
