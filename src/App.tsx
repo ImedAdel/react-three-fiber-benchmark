@@ -46,6 +46,7 @@ const useStore = create(
 )
 
 function ItemSlow({ id }: { id: number }) {
+	// Replicate useState behavior
 	const coords = useStore((state) => state).coords[id]
 	if (!coords) return null
 	return (
@@ -102,6 +103,31 @@ function InstancedBoxes({ size }: { size: number }) {
 
 	useFrame(() => {
 		for (const [i, item] of coords.current.entries()) {
+			tO.position.set(0, 0, 0)
+			tO.rotation.set(...item)
+			tO.updateMatrix()
+
+			mesh.current.setMatrixAt(i, tO.matrix)
+		}
+
+		mesh.current.instanceMatrix.needsUpdate = true
+	})
+
+	return (
+		<instancedMesh ref={mesh} args={[null!, null!, size]}>
+			<boxBufferGeometry args={[2, 2, 2]} attach="geometry" />
+			<meshNormalMaterial attach="material" />
+		</instancedMesh>
+	)
+}
+
+function SlowInstancedBoxes({ size }: { size: number }) {
+	const mesh = useRef<THREE.InstancedMesh>(null!)
+	// Replicate useState behavior
+	const coords = useStore((state) => state).coords
+
+	useFrame(() => {
+		for (const [i, item] of coords.entries()) {
 			tO.position.set(0, 0, 0)
 			tO.rotation.set(...item)
 			tO.updateMatrix()
@@ -243,7 +269,11 @@ function App() {
 				<Suspense fallback={null}>
 					<ErrorBoundaries>
 						{instanced ? (
-							<InstancedBoxes size={amount} />
+							transient ? (
+								<InstancedBoxes size={amount} />
+							) : (
+								<SlowInstancedBoxes size={amount} />
+							)
 						) : (
 							<Boxes transient={transient} />
 						)}
